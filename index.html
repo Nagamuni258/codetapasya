@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeritasAI - Fake News & Deepfake Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shield-alt me-2"></i>VeritasAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analyze">Analyze</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#results">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Detect Fake News & Deepfakes with AI</h1>
+                    <p class="lead mb-4">VeritasAI uses advanced artificial intelligence to analyze content and detect misinformation, deepfakes, and manipulated media.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#analyze" class="btn btn-primary btn-lg">Analyze Content</a>
+                        <a href="#results" class="btn btn-outline-light btn-lg">See Examples</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="hero-visual">
+                        <div class="scan-animation">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analyze Section -->
+    <section id="analyze" class="analyze-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="section-title">Analyze Content</h2>
+                    <p class="section-subtitle">Select the type of content you want to verify</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card analysis-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="analysis-icon mb-4">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            <h3 class="card-title h4">News Article</h3>
+                            <p class="card-text">Paste a URL or text from a news article to check its credibility</p>
+                            <div class="mt-4">
+                                <div class="form-check form-switch form-check-reverse">
+                                    <input class="form-check-input" type="checkbox" id="urlToggle" checked>
+                                    <label class="form-check-label" for="urlToggle">Use URL</label>
+                                </div>
+                            </div>
+                            <div class="mt-3 url-input">
+                                <input type="url" class="form-control" id="articleUrl" placeholder="https://example.com/news-article">
+                            </div>
+                            <div class="mt-3 text-input d-none">
+                                <textarea class="form-control" id="articleText" rows="5" placeholder="Paste article text here..."></textarea>
+                            </div>
+                            <button class="btn btn-primary mt-4" onclick="analyzeArticle()">Analyze Article</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card analysis-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="analysis-icon mb-4">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <h3 class="card-title h4">Image/Video</h3>
+                            <p class="card-text">Upload an image or video file to check for deepfake manipulation</p>
+                            <div class="mt-4">
+                                <div class="file-upload-area">
+                                    <input type="file" id="mediaFile" class="file-input" accept="image/*,video/*" hidden>
+                                    <label for="mediaFile" class="file-upload-label">
+                                        <i class="fas fa-cloud-upload-alt me-2"></i>
+                                        <span>Choose file</span>
+                                    </label>
+                                    <div id="fileName" class="file-name mt-2"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-4" onclick="analyzeMedia()">Analyze Media</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="section-title">Analysis Results</h2>
+                    <p class="section-subtitle">See detailed breakdown of content authenticity</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card result-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="resultTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="article-tab" data-bs-toggle="tab" href="#articleResult">Article Analysis</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="media-tab" data-bs-toggle="tab" href="#mediaResult">Media Analysis</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="resultTabsContent">
+                                <div class="tab-pane fade show active" id="articleResult">
+                                    <div class="text-center py-4" id="articlePlaceholder">
+                                        <i class="fas fa-search fa-3x mb-3"></i>
+                                        <p>Analyze an article to see results here</p>
+                                    </div>
+                                    <div id="articleAnalysisResult" class="d-none">
+                                        <div class="result-summary mb-4">
+                                            <h4>Credibility Score</h4>
+                                            <div class="score-display">
+                                                <div class="score-circle">
+                                                    <span id="credibilityScore">85</span>%
+                                                </div>
+                                            </div>
+                                            <div class="verdict-badge mt-3">
+                                                <span id="verdictText" class="badge bg-success">Likely Authentic</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="details-section">
+                                            <h5>Analysis Details</h5>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Source Reliability</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                                                </div>
+                                                <small>The website has a moderate reliability score based on our database.</small>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Language Analysis</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar" role="progressbar" style="width: 60%"></div>
+                                                </div>
+                                                <small>Some emotional language detected that may indicate bias.</small>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Fact-Checking</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                                                </div>
+                                                <small>Claims in the article align with verified facts from reputable sources.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="mediaResult">
+                                    <div class="text-center py-4" id="mediaPlaceholder">
+                                        <i class="fas fa-video fa-3x mb-3"></i>
+                                        <p>Analyze an image or video to see results here</p>
+                                    </div>
+                                    <div id="mediaAnalysisResult" class="d-none">
+                                        <div class="result-summary mb-4">
+                                            <h4>Authenticity Score</h4>
+                                            <div class="score-display">
+                                                <div class="score-circle">
+                                                    <span id="authenticityScore">42</span>%
+                                                </div>
+                                            </div>
+                                            <div class="verdict-badge mt-3">
+                                                <span id="mediaVerdict" class="badge bg-danger">Likely Manipulated</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="details-section">
+                                            <h5>Detection Indicators</h5>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Visual Artifacts</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+                                                </div>
+                                                <small>Signs of manipulation detected around facial features.</small>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">Metadata Analysis</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"></div>
+                                                </div>
+                                                <small>Inconsistencies found in file metadata.</small>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="detail-label">AI Detection</span>
+                                                <div class="progress mb-2">
+                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 78%"></div>
+                                                </div>
+                                                <small>High probability of AI-generated content.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="section-title">How VeritasAI Works</h2>
+                    <p class="section-subtitle">Our advanced AI technology helps identify misinformation</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>AI-Powered Analysis</h4>
+                        <p>Uses machine learning models trained on millions of data points to detect patterns of misinformation.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4>Source Verification</h4>
+                        <p>Cross-references content against known reliable sources and fact-checking databases.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Pattern Recognition</h4>
+                        <p>Identifies linguistic patterns and visual artifacts common in fake news and deepfakes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card faq-card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Frequently Asked Questions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            How accurate is VeritasAI?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Our current models achieve approximately 92% accuracy on verified test datasets for news articles and 87% accuracy for deepfake detection. However, no system is perfect, and results should be considered as one factor in your evaluation.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            What types of media can I analyze?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            You can analyze text articles (via URL or direct input), images (JPEG, PNG), and videos (MP4, MOV). The maximum file size for uploads is 100MB.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                            Is my data stored or shared?
+                                        </button>
+                                    </h2>
+                                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            We take privacy seriously. Analyzed content is temporarily processed but not stored long-term or shared with third parties. For more details, please see our Privacy Policy.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="mb-0">&copy; 2025 VeritasAI. All rights reserved.</p>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
